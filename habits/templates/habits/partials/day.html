@@ -1,1 +1,1 @@
-<div id="{% if data.is_today %}today{% else %}{{ data.date }}{% endif %}" class="aspect-square {% if data.completed %}bg-pink-800{% elif data.is_past %}bg-zinc-700{% else %}bg-zinc-800{% endif %} transition"></div>
+<div id="{% if data.is_today %}today{% else %}{{ data.date }}{% endif %}" class="aspect-square {% if data.completed %}bg-pink-800{% elif data.is_past %}bg-zinc-700{% else %}bg-zinc-800{% endif %} {% if data.is_today %}animate-pulse{% endif %} transition"></div>

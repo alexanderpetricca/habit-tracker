@@ -75,7 +75,7 @@ def habit_view(request, pk=None):
     context = {
         'habit': habit,
         'date_grid': date_grid,
-        'user_habits': Habit.objects.filter(owner=request.user)
+        'user_habits': Habit.objects.filter(owner=request.user, deleted=False),
     }
 
     return render(request, 'habits/habit.html', context)

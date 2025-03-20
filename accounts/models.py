@@ -39,7 +39,4 @@ class CustomUser(AbstractUser):
     
 
     def max_habits_created(self):
-        if self.all_habits.all().count() >= 3:
-            return True
-        else:
-            return False
+        return self.all_habits.filter(deleted=False).count() >= 5

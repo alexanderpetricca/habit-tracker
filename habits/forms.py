@@ -15,7 +15,6 @@ class CreateUpdateHabitForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'placeholder': 'What new habit would you like to track?',
-                    'class': 'w-full my-5 p-4 text-white bg-zinc-800'
                 }
             )
         }

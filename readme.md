@@ -1,4 +1,4 @@
-# Django Boilerplate
+# Habit Tracker
 
 ## Overview
 

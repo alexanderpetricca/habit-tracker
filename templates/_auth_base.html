@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Habit Tracker | {% block title %}{% endblock %}</title>
+        <title>Habit | {% block title %}{% endblock %}</title>
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,18 +70,21 @@
                                         New Habit
                                     </div>
                                 </a>
-                                <a href="#" class="group flex items-center px-2 py-3 text-zinc-700 hover:text-pink-700 transition">
+                                <a href="{% url 'account_change_password' %}" class="group flex items-center px-2 py-3 text-zinc-700 hover:text-pink-700 transition">
                                     <div class="w-4 h-4 me-3 bg-zinc-800 group-hover:bg-pink-700 transition"></div>
                                     <div>
-                                        Settings
+                                        Change Password
                                     </div>
                                 </a>
-                                <a href="#" class="group flex items-center px-2 py-3 text-zinc-700 hover:text-pink-700 transition">
-                                    <div class="w-4 h-4 me-3 bg-zinc-800 group-hover:bg-pink-700 transition"></div>
-                                    <div>
-                                        Logout
-                                    </div>
-                                </a>
+                                <form action="{% url 'account_logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button button type="submit" class="group flex items-center px-2 py-3 text-zinc-700 hover:text-pink-700 hover:cursor-pointer transition">
+                                        <div class="w-4 h-4 me-3 bg-zinc-800 group-hover:bg-pink-700 transition"></div>
+                                        <div>
+                                            Logout
+                                        </div>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

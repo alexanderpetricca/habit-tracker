@@ -1,0 +1,33 @@
+{% extends '_unauth_base.html' %}
+{% load static %}
+{% block title %}Confirm Email{% endblock title %}
+{% block content %}
+{% if confirmation %}
+    {% if can_confirm %}
+        <h2 class="text-2xl mb-8 text-center">
+            Confirm Email
+        </h2>
+        <p>Click below to confirm your email address.</p>
+        <form action="{% url 'account_confirm_email' confirmation.key %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="py-2 px-3 my-2 bg-blue-400 text-white rounded w-full hover:bg-blue-500">
+                Confirm Email
+            </button>
+        </form>
+    {% else %}
+        <h2 class="text-2xl mb-8 text-center">
+            Email Unavailable
+        </h2>
+        <p>
+            Unable to confirm email address, because it is associated with another account.
+        </p>
+    {% endif %}
+{% else %}
+    <h2 class="text-2xl mb-8 text-center">
+        Expired Link
+    </h2>
+    <p>
+        This confirmation link has expired
+    </p>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends '_auth_base.html' %}
+{% block title %}New Habit{% endblock title %}
+{% block content %}
+<div class="h-full flex justify-center">
+    <form method="post" class="w-full lg:w-[50%] flex justify-center items-center">
+        {% csrf_token %}
+        {{ form.name }}
+        <button type="submit" class="w-13 h-13 ms-2 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Create new habit"></button>
+    </form>
+</div>
+{% endblock content %}

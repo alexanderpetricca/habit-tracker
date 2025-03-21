@@ -18,78 +18,79 @@
         <!-- Icons -->
         <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     </head>
-    <body class="h-dvh bg-zinc-900 font-roboto-mono text-sm p-5">
-        <main id="main-container" class="h-full flex flex-col">
-            <nav class="flex justify-end mb-3">
-                <div x-cloak 
-                    x-data="{ open: false }" 
-                    id="side-menu" class="relative">
-                    <button type="button" class="w-8 h-8 bg-zinc-800 hover:bg-zinc-700 hover:cursor-pointer transition" @click="open = true" aria-label="open sidebar"></button>
-                    <!-- Sidebar Wrapper -->
+    <body class="h-dvh w-full bg-zinc-900 font-roboto-mono text-sm p-5">   
+        <nav class="flex justify-end mb-3">
+            <div x-cloak 
+                x-data="{ open: false }" 
+                id="side-menu" class="relative">
+                <button type="button" class="w-8 h-8 bg-zinc-800 hover:bg-zinc-700 hover:cursor-pointer transition" @click="open = true" aria-label="open sidebar"></button>
+                <!-- Sidebar Wrapper -->
+                <div x-show="open"
+                    @keydown.window.escape="open = false"
+                    x-transition:enter="transition ease-out duration-500"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-500"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    class="fixed inset-0 flex justify-end z-50">
+                    <!-- Background Overlay -->
+                    <div @click="open = false"
+                        class="fixed inset-0 bg-zinc-800/75 transition-opacity" 
+                        aria-hidden="true">
+                    </div>
+                    <!-- Sidebar -->
                     <div x-show="open"
-                        @keydown.window.escape="open = false"
-                        x-transition:enter="transition ease-out duration-500"
-                        x-transition:enter-start="opacity-0"
-                        x-transition:enter-end="opacity-100"
-                        x-transition:leave="transition ease-in duration-500"
-                        x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0"
-                        class="fixed inset-0 flex justify-end z-50">
-                        <!-- Background Overlay -->
-                        <div @click="open = false"
-                            class="fixed inset-0 bg-zinc-800/75 transition-opacity" 
-                            aria-hidden="true">
-                        </div>
-                        <!-- Sidebar -->
-                        <div x-show="open"
-                            x-transition:enter="transform transition ease-out duration-500"
-                            x-transition:enter-start="translate-x-full"
-                            x-transition:enter-end="translate-x-0"
-                            x-transition:leave="transform transition ease-in duration-500"
-                            x-transition:leave-start="translate-x-0"
-                            x-transition:leave-end="translate-x-full"
-                            class="w-100 flex flex-col justify-between bg-zinc-900 shadow-xl h-screen py-6 px-4 z-10">
-                            <div id="side-menu-main">
-                                <div id="side-menu-body">
-                                    <div id="sidebar-links" class="w-full">
-                                        {% for habit in user_habits %}
-                                        <a href="{% url 'habit' habit.pk %}" class="group flex items-center py-3 text-zinc-500 hover:text-pink-700 transition">
-                                            <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
-                                            <div>
-                                                {{ habit.name }}
-                                            </div>
-                                        </a>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="side-menu-footer">
-                                <a href="{% url 'create_habit' %}" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 hover:cursor-pointer transition">
-                                    <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
-                                    <div>
-                                        New Habit
-                                    </div>
-                                </a>
-                                <a href="{% url 'account_change_password' %}" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 transition">
-                                    <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
-                                    <div>
-                                        Change Password
-                                    </div>
-                                </a>
-                                <form action="{% url 'account_logout' %}" method="post">
-                                    {% csrf_token %}
-                                    <button button type="submit" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 hover:cursor-pointer transition">
+                        x-transition:enter="transform transition ease-out duration-500"
+                        x-transition:enter-start="translate-x-full"
+                        x-transition:enter-end="translate-x-0"
+                        x-transition:leave="transform transition ease-in duration-500"
+                        x-transition:leave-start="translate-x-0"
+                        x-transition:leave-end="translate-x-full"
+                        class="w-100 flex flex-col justify-between bg-zinc-900 shadow-xl h-screen py-6 px-4 z-10">
+                        <div id="side-menu-main">
+                            <div id="side-menu-body">
+                                <div id="sidebar-links" class="w-full">
+                                    {% for habit in user_habits %}
+                                    <a href="{% url 'habit' habit.pk %}" class="group flex items-center py-3 text-zinc-500 hover:text-pink-700 transition">
                                         <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
                                         <div>
-                                            Logout
+                                            {{ habit.name }}
                                         </div>
-                                    </button>
-                                </form>
+                                    </a>
+                                    {% endfor %}
+                                </div>
                             </div>
+                        </div>
+                        <div id="side-menu-footer">
+                            <a href="{% url 'create_habit' %}" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 hover:cursor-pointer transition">
+                                <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
+                                <div>
+                                    New Habit
+                                </div>
+                            </a>
+                            <a href="{% url 'account_change_password' %}" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 transition">
+                                <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
+                                <div>
+                                    Change Password
+                                </div>
+                            </a>
+                            <form action="{% url 'account_logout' %}" method="post">
+                                {% csrf_token %}
+                                <button button type="submit" class="group flex items-center px-2 py-3 text-zinc-500 hover:text-pink-700 hover:cursor-pointer transition">
+                                    <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
+                                    <div>
+                                        Logout
+                                    </div>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </div>
+            {% block nav %}{% endblock nav %}
+        </nav>
+        <main id="main-container" class="h-full">
             {% block content %}
             {% endblock content %}
         </main>

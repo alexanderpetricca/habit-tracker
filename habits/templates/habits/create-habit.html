@@ -2,11 +2,27 @@
 {% block title %}New Habit{% endblock title %}
 {% load field_wrappers %}
 {% block content %}
-<div class="h-full flex justify-center">
-    <form method="post" class="w-full lg:w-[50%] flex justify-center items-center">
+<div class="h-full flex justify-end items-center">
+    <form method="post" class="h-full w-full lg:w-[50%] flex flex-col justify-center items-center">
         {% csrf_token %}
         {% field_wrapper form.name %}
-        <button type="submit" class="w-13 h-13 ms-2 my-1 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Create new habit"></button>
+        <div class="w-full flex items-start">
+            <div class="w-full h-full flex justify-between items-center py-1">
+                <div class="w-full h-full flex justify-between items-center">
+                    {% for value, label in form.duration.field.choices %}
+                    <div class="h-full w-full me-2 last:me-0">
+                        <input id="id_duration_{{ value }}" type="radio" name="duration" value="{{ value }}" class="hidden peer"/>
+                        <label
+                            for="id_duration_{{ value }}"
+                            class="h-full w-full flex flex-col justify-center items-center text-white text-xs bg-zinc-800 hover:bg-pink-700 hover:cursor-pointer focus:outline-none focus:border-pink-800 transition peer-checked:bg-pink-800">
+                            {{ label }} <span>days</span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="w-13 h-13 ms-2 my-1 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Login"></button>
+        </div>
     </form>
 </div>
 {% endblock content %}

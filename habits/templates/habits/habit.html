@@ -1,18 +1,17 @@
 {% extends '_auth_base.html' %}
 {% block title %}{{ habit.name }}{% endblock title %}
+{% block nav %}
+<div class="ps-5">
+    <form hx-post="{% url 'habit_completed_day_toggle' habit.pk %}" hx-target="#today" hx-swap="outerHTML">
+        {% csrf_token %}
+        <button type="submit" class="w-8 h-8 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Toggle habit completion for today"></button>
+    </form>
+</div>
+{% endblock nav %}
 {% block content %}
-<div class="flex grow items-start justify-between">
-    <div></div>
-    <div class="h-full grid grid-cols-7 gap-1">
-        {% for date, data in date_grid.items %}
-        {% include 'habits/partials/day.html' %}
-        {% endfor %}
-    </div>
-    <div>
-        <form hx-post="{% url 'habit_completed_day_toggle' habit.pk %}" hx-target="#today" hx-swap="outerHTML">
-            {% csrf_token %}
-            <button type="submit" class="w-8 h-8 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Toggle habit completion for today"></button>
-        </form>
-    </div>
+<div class="max-h-screen mx-auto max-w-50 grid grid-cols-7 gap-2">
+    {% for date, data in date_grid.items %}
+    {% include 'habits/partials/day.html' %}
+    {% endfor %}
 </div>
 {% endblock content %}

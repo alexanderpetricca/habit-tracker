@@ -40,9 +40,7 @@ class CustomSignupView(SignupView):
     Allauth override for SignupView.
     """
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        return response
+    pass
     
 
 class CustomPasswordResetView(PasswordResetView):

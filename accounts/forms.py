@@ -42,16 +42,6 @@ class CustomSignupForm(SignupForm):
     Override settings on AllAuth signup form.
     """
 
-    organisation_name = forms.CharField(
-        required=True, 
-        label='',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Company Name',
-            }
-        )
-    )
-    
 
     def __init__(self, *args, **kwargs):
         super(CustomSignupForm, self).__init__(*args, **kwargs)

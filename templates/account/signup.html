@@ -3,7 +3,7 @@
 {% load field_wrappers %}
 {% block title %}Signup{% endblock title %}
 {% block content %}
-<form method="post" class="w-full max-w-150 flex flex-col justify-center mb-5">
+<form action="{% url 'account_signup' %}" method="post" class="w-full max-w-150 flex flex-col justify-center mb-5">
     {% csrf_token %}
     {% include 'partials/form-errors.html' %}
     {% field_wrapper form.email %}

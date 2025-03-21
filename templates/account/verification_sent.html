@@ -2,8 +2,12 @@
 {% load static %}
 {% block title %}Email Confirmation Sent{% endblock title %}
 {% block content %}
-<h2 class="text-2xl mb-8 text-center">
-    Confirmation Sent
-</h2>
-<p>Please check your inbox for a confirmation email.</p>
+<div class="w-full max-w-150 flex flex-col justify-center mb-5">
+    <p class="text-zinc-500">Please check your inbox for a confirmation email.</p>
+</div>
+<div class="w-full max-w-150">
+    <a href="{% url 'account_login' %}" class="block text-sm mb-2 text-pink-800 hover:text-pink-700 transition">
+        Return to Login
+    </a>
+</div>
 {% endblock content %}

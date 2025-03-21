@@ -113,3 +113,8 @@ def toggle_completed_day_view(request, pk):
     }
 
     return render(request, 'habits/partials/day.html', context)
+
+
+
+def test_error_view(request):
+    return render(request, 'account/account_inactive.html')

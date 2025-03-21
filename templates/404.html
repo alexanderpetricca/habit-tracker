@@ -1,7 +1,11 @@
-{% extends '_error_base.html' %}
+{% extends '_unauth_base.html' %}
 {% load static %}
 {% block title %}404{% endblock title %}
 {% block content %}
-<h1>404</h1>
-<p>Page Not Found</p>
+<div class="w-full max-w-150 flex flex-col justify-center items-center mb-5">
+    <div class="flex items-center">
+        <h1 class="me-4 text-xl text-pink-700">404</h1>
+        <p class="text-zinc-500">Page Not Found</p>
+    </div>
+</div>
 {% endblock content %}

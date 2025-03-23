@@ -21,6 +21,8 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     email = models.EmailField(unique=True)
+
+    habit_limit = models.IntegerField(default=5)
     
 
     USERNAME_FIELD = 'email'
@@ -39,4 +41,4 @@ class CustomUser(AbstractUser):
     
 
     def max_habits_created(self):
-        return self.all_habits.filter(deleted=False).count() >= 5
+        return self.all_habits.filter(deleted=False).count() >= self.habit_limit

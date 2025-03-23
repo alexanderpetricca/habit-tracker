@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 
+from habits.models import Habit
+
 
 class CustomUserModelTests(TestCase):
 
@@ -21,6 +23,18 @@ class CustomUserModelTests(TestCase):
             password = 'testpass123'
         )
 
+        self.habit_1 = Habit.objects.create(
+            owner = self.user,
+            name = 'Test Habit 1',
+            duration = 7,
+        )
+
+        self.habit_1 = Habit.objects.create(
+            owner = self.user,
+            name = 'Test Habit 2',
+            duration = 7,
+        )
+
         self.add_customuser = Permission.objects.get(codename='add_customuser')
         self.view_customuser = Permission.objects.get(codename='view_customuser')
 
@@ -33,6 +47,7 @@ class CustomUserModelTests(TestCase):
         self.assertEqual(self.user.email, 'testuser@email.com')
         self.assertEqual(self.user.first_name, 'Test')
         self.assertEqual(self.user.last_name, 'User')
+        self.assertEqual(self.user.habit_limit, 5)
         self.assertTrue(self.user.is_active)
         self.assertFalse(self.user.is_staff)
         self.assertFalse(self.user.is_superuser)
@@ -46,6 +61,7 @@ class CustomUserModelTests(TestCase):
         self.assertEqual(self.admin_user.email, 'adminuser@email.com')
         self.assertEqual(self.admin_user.first_name, 'Admin')
         self.assertEqual(self.admin_user.last_name, 'User')
+        self.assertEqual(self.user.habit_limit, 5)
         self.assertTrue(self.admin_user.is_active)
         self.assertTrue(self.admin_user.is_staff)
         self.assertTrue(self.admin_user.is_superuser)
@@ -58,3 +74,17 @@ class CustomUserModelTests(TestCase):
 
         self.assertEqual(str(self.user), self.user.email)
         self.assertEqual(str(self.admin_user), self.admin_user.email)
+
+
+    def max_habits_created(self):
+        """
+        Tests the max habits created method.
+        """
+
+        self.assertTrue(self.user.max_habits_created())
+        
+        # Reduce habit_limit from 5, to 2, and test again to ensure False.
+        self.user.habit_limit = 2
+        self.user.save()
+        self.user.refresh_from_db()
+        self.assertFalse(self.user.max_habits_created())

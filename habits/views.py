@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
+from django.http import HttpResponseNotAllowed
 
 from habits.models import Habit, CompletedDay
 from habits.forms import CreateUpdateHabitForm
@@ -103,28 +104,33 @@ def toggle_completed_day_view(request, pk):
     or creating it if it doesn't.
     """
 
-    habit = get_object_or_404(Habit, id=pk, owner=request.user)
+    if request.method == 'POST':
 
-    try:
-        existing_completed_day = CompletedDay.objects.get(
-            habit=habit, 
-            day=timezone.now().date()
-        )
-        existing_completed_day.delete()
-        completed = False
-    except ObjectDoesNotExist:
-        CompletedDay.objects.create(
-            habit = habit,
-        )
-        completed = True
+        habit = get_object_or_404(Habit, id=pk, owner=request.user)
 
-    context = {
-        'data': {
-            'date': timezone.now().strftime('%Y-%m-%d'),
-            'completed': completed,
-            'is_past': False,
-            'is_today': True,
-        },
-    }
+        try:
+            existing_completed_day = CompletedDay.objects.get(
+                habit=habit, 
+                day=timezone.now().date()
+            )
+            existing_completed_day.delete()
+            completed = False
+        except ObjectDoesNotExist:
+            CompletedDay.objects.create(
+                habit = habit,
+            )
+            completed = True
 
-    return render(request, 'habits/partials/day.html', context)
+        context = {
+            'data': {
+                'date': timezone.now().strftime('%Y-%m-%d'),
+                'completed': completed,
+                'is_past': False,
+                'is_today': True,
+            },
+        }
+
+        return render(request, 'habits/partials/day.html', context)
+    
+    else:
+        return HttpResponseNotAllowed(['POST'])

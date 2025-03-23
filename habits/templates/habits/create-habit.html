@@ -4,6 +4,7 @@
 {% block content %}
 <div class="h-full flex justify-center items-center">
     <form method="post" class="h-full w-full lg:w-[50%] flex flex-col justify-center items-center">
+        <p class="text-start w-full mb-2 ps-2 text-pink-700">Create New Habit</p>
         {% csrf_token %}
         {% field_wrapper form.name %}
         <div class="w-full flex items-start">
@@ -21,7 +22,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <button type="submit" class="w-13 h-13 ms-2 my-1 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="Login"></button>
+            <button type="submit" class="w-13 h-13 ms-2 my-1 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="create"></button>
         </div>
     </form>
 </div>

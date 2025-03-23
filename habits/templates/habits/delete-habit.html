@@ -1,0 +1,19 @@
+{% extends '_auth_base.html' %}
+{% block title %}Delete Habit{% endblock title %}
+{% load field_wrappers %}
+{% block content %}
+<div class="h-full flex justify-center items-center">
+    <form method="post" class="h-full w-full lg:w-[50%] flex flex-col justify-center items-center">
+        <p class="text-start w-full mb-2 ps-2 text-pink-700">Delete Habit</p>
+        {% csrf_token %}
+        <div class="w-full flex items-start">
+            <div class="w-full h-full flex justify-between items-center py-1">
+                <div class="w-full h-13 my-1 p-4 text-white bg-zinc-800 border-transparent border-1 focus:outline-none focus:border-pink-800 transition">
+                    Are you sure you want to delete '{{ habit.name }}' ?
+                </div>
+                <button type="submit" class="w-13 h-13 ms-2 my-1 bg-pink-800 hover:bg-pink-700 hover:cursor-pointer transition" aria-label="delete"></button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

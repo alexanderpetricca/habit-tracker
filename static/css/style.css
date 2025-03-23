@@ -6,8 +6,6 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-blue-500: oklch(0.623 0.214 259.815);
-    --color-blue-700: oklch(0.488 0.243 264.376);
     --color-pink-600: oklch(0.592 0.249 0.584);
     --color-pink-700: oklch(0.525 0.223 3.958);
     --color-pink-800: oklch(0.459 0.187 3.815);
@@ -204,12 +202,6 @@
   .z-50 {
     z-index: 50;
   }
-  .col-auto {
-    grid-column: auto;
-  }
-  .mx-auto {
-    margin-inline: auto;
-  }
   .my-1 {
     margin-block: calc(var(--spacing) * 1);
   }
@@ -228,14 +220,23 @@
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
   .mb-2 {
     margin-bottom: calc(var(--spacing) * 2);
   }
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
+  .mb-4 {
+    margin-bottom: calc(var(--spacing) * 4);
+  }
   .mb-5 {
     margin-bottom: calc(var(--spacing) * 5);
+  }
+  .mb-8 {
+    margin-bottom: calc(var(--spacing) * 8);
   }
   .block {
     display: block;
@@ -261,15 +262,6 @@
   .h-13 {
     height: calc(var(--spacing) * 13);
   }
-  .h-100 {
-    height: calc(var(--spacing) * 100);
-  }
-  .h-\[50\%\] {
-    height: 50%;
-  }
-  .h-\[60\%\] {
-    height: 60%;
-  }
   .h-dvh {
     height: 100dvh;
   }
@@ -278,12 +270,6 @@
   }
   .h-screen {
     height: 100vh;
-  }
-  .max-h-full {
-    max-height: 100%;
-  }
-  .max-h-screen {
-    max-height: 100vh;
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
@@ -300,23 +286,11 @@
   .w-100 {
     width: calc(var(--spacing) * 100);
   }
-  .w-\[8\%\] {
-    width: 8%;
-  }
-  .w-\[10\%\] {
-    width: 10%;
-  }
   .w-full {
     width: 100%;
   }
-  .max-w-50 {
-    max-width: calc(var(--spacing) * 50);
-  }
   .max-w-150 {
     max-width: calc(var(--spacing) * 150);
-  }
-  .max-w-full {
-    max-width: 100%;
   }
   .flex-grow {
     flex-grow: 1;
@@ -337,9 +311,6 @@
   }
   .animate-pulse {
     animation: var(--animate-pulse);
-  }
-  .grid-flow-col {
-    grid-auto-flow: column;
   }
   .grid-cols-7 {
     grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -362,17 +333,8 @@
   .justify-end {
     justify-content: flex-end;
   }
-  .gap-1 {
-    gap: calc(var(--spacing) * 1);
-  }
   .gap-2 {
     gap: calc(var(--spacing) * 2);
-  }
-  .overflow-hidden {
-    overflow: hidden;
-  }
-  .overflow-scroll {
-    overflow: scroll;
   }
   .border-1 {
     border-style: var(--tw-border-style);
@@ -380,15 +342,6 @@
   }
   .border-transparent {
     border-color: transparent;
-  }
-  .bg-blue-500 {
-    background-color: var(--color-blue-500);
-  }
-  .bg-blue-700 {
-    background-color: var(--color-blue-700);
-  }
-  .bg-pink-700 {
-    background-color: var(--color-pink-700);
   }
   .bg-pink-800 {
     background-color: var(--color-pink-800);
@@ -414,9 +367,6 @@
   .p-5 {
     padding: calc(var(--spacing) * 5);
   }
-  .p-10 {
-    padding: calc(var(--spacing) * 10);
-  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -429,6 +379,9 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .py-6 {
     padding-block: calc(var(--spacing) * 6);
   }
@@ -440,6 +393,12 @@
   }
   .ps-5 {
     padding-inline-start: calc(var(--spacing) * 5);
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-start {
+    text-align: start;
   }
   .text-sm {
     font-size: var(--text-sm);
@@ -510,13 +469,6 @@
       }
     }
   }
-  .group-hover\:bg-pink-800 {
-    &:is(:where(.group):hover *) {
-      @media (hover: hover) {
-        background-color: var(--color-pink-800);
-      }
-    }
-  }
   .peer-checked\:bg-pink-800 {
     &:is(:where(.peer):checked ~ *) {
       background-color: var(--color-pink-800);
@@ -552,13 +504,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-pink-700);
-      }
-    }
-  }
-  .hover\:text-pink-800 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-pink-800);
       }
     }
   }

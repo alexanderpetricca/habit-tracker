@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.http import HttpResponseNotAllowed
 
 from habits.models import Habit, CompletedDay
-from habits.forms import CreateUpdateHabitForm
+from habits.forms import CreateHabitForm
 
 
 @login_required
@@ -33,6 +33,24 @@ def home_view(request):
     
     else:
         return redirect(reverse('create_habit'))
+    
+
+@login_required
+def habit_view(request, pk):
+    """
+    Renders the habit grid for the specified habit.
+    """
+    
+    habit = get_object_or_404(Habit, id=pk, owner=request.user, deleted=False)
+    date_grid = habit.generate_grid()
+
+    context = {
+        'habit': habit,
+        'date_grid': date_grid,
+        'user_habits': Habit.objects.filter(owner=request.user, deleted=False),
+    }
+
+    return render(request, 'habits/habit.html', context)    
 
 
 @login_required
@@ -43,11 +61,10 @@ def create_habit_view(request):
     """
 
     if not request.user.max_habits_created():
-        form = CreateUpdateHabitForm()
+        form = CreateHabitForm()
 
         if request.method == 'POST':
-            form = CreateUpdateHabitForm(request.POST)
-
+            form = CreateHabitForm(request.POST)
             if form.is_valid():
                 new_habit = form.save(commit=False)
                 new_habit.owner = request.user
@@ -66,6 +83,26 @@ def create_habit_view(request):
     
 
 @login_required
+def delete_habit_view(request, pk):
+    """
+    Renders deletion confirmation page on GET, soft deletes the habit on POST.
+    """
+
+    habit = get_object_or_404(Habit, id=pk, owner=request.user)
+
+    if request.method == 'POST':
+        habit.soft_delete()
+        return redirect(reverse('home'))
+
+    context = {
+        'habit': habit,
+        'user_habits': Habit.objects.filter(owner=request.user, deleted=False),
+    }
+
+    return render(request, 'habits/delete-habit.html', context)
+    
+
+@login_required
 def max_habits_created_view(request):
     """
     Renders warning to user that the max number of habits for the account has 
@@ -77,24 +114,6 @@ def max_habits_created_view(request):
     }
 
     return render(request, 'habits/max-habits-created.html', context)
-
-
-@login_required
-def habit_view(request, pk):
-    """
-    Renders the habit grid for the specified habit.
-    """
-    
-    habit = get_object_or_404(Habit, id=pk, owner=request.user, deleted=False)
-    date_grid = habit.generate_grid()
-
-    context = {
-        'habit': habit,
-        'date_grid': date_grid,
-        'user_habits': Habit.objects.filter(owner=request.user, deleted=False),
-    }
-
-    return render(request, 'habits/habit.html', context)
 
 
 @login_required

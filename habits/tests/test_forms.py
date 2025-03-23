@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from habits.forms import CreateUpdateHabitForm
+from habits.forms import CreateHabitForm
 
 
 class HabitViewTests(TestCase):
@@ -12,7 +12,7 @@ class HabitViewTests(TestCase):
            'duration': 30,
         }
 
-        form = CreateUpdateHabitForm(data=form_data, files=form_data)
+        form = CreateHabitForm(data=form_data, files=form_data)
 
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['name'], 'A Test Habit')

@@ -137,7 +137,7 @@ class HabitViewTests(TestCase):
     def test_create_habit_view_user_logged_in_post(self):
         """
         Tests new habit is created on POST to create habit view when user is 
-        logged in, and that the user is redirected.
+        logged in, and that the user is redirected afterward.
         """
         
         self.client.login(email="test.user@email.com", password="TestPass123")
@@ -231,10 +231,63 @@ class HabitViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         try:
-            new_completed_day = CompletedDay.objects.get(
+            CompletedDay.objects.get(
                 habit__id=self.habit.id, 
                 day=str(timezone.now().date()),
             )
             self.fail('Completed day object was not deleted.')  
+        except ObjectDoesNotExist:
+            pass
+
+
+    # Delete Habit
+    def test_delete_habit_view_user_logged_out(self):
+        """
+        Test user is redirected to login after attempting to delete habit 
+        page, without being logged in.
+        """
+        
+        self.client.logout()
+        
+        response = self.client.get(reverse('delete_habit', kwargs={'pk': self.habit.pk}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('account_login')}?next=/delete-habit/{self.habit.pk}/")
+
+        response = self.client.get(f"{reverse('account_login')}?next=/delete-habit/{self.habit.pk}/")
+        self.assertTemplateUsed(response, 'account/login.html')
+        self.assertContains(response, 'Login')
+
+
+    def test_delete_habit_view_user_logged_in_get(self):
+        """
+        Test delete habit page is rendered on GET to delete habit view, when 
+        user is logged in.
+        """
+        
+        self.client.login(email="test.user@email.com", password="TestPass123")
+        
+        response = self.client.get(reverse('delete_habit', kwargs={'pk': self.habit.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'habits/delete-habit.html')
+        self.assertContains(response, 'Delete Habit')
+
+
+    def test_delete_habit_view_user_logged_in_post(self):
+        """
+        Tests habit is deleted on POST to delete habit view, when user is 
+        logged in, and that the user is redirected afterward.
+        """        
+        
+        self.client.login(email="test.user@email.com", password="TestPass123")
+        
+        response = self.client.post(reverse('delete_habit', kwargs={'pk': self.habit.pk}))
+        self.assertEqual(response.status_code, 302)
+
+        try:
+            Habit.objects.get(
+                name = 'A Test Habit',
+                deleted = False,
+            )
+            self.fail('Habit object was not deleted.')  
         except ObjectDoesNotExist:
             pass

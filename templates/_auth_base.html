@@ -18,7 +18,7 @@
         <!-- Icons -->
         <link rel="icon" href="{% static 'icons/favicon.ico' %}" type="image/x-icon">
     </head>
-    <body class="h-dvh w-full bg-zinc-900 font-roboto-mono text-sm p-5">   
+    <body class="h-dvh flex flex-col bg-zinc-900 font-roboto-mono text-sm p-5">   
         <nav class="flex justify-end mb-3">
             <div x-cloak 
                 x-data="{ open: false }" 
@@ -51,11 +51,11 @@
                         <div id="side-menu-main">
                             <div id="side-menu-body">
                                 <div id="sidebar-links" class="w-full">
-                                    {% for habit in user_habits %}
-                                    <a href="{% url 'habit' habit.pk %}" class="group flex items-center py-3 text-zinc-500 hover:text-pink-700 transition">
-                                        <div class="w-4 h-4 me-3 bg-zinc-500 group-hover:bg-pink-700 transition"></div>
+                                    {% for listed_habit in user_habits %}
+                                    <a href="{% url 'habit' listed_habit.pk %}" class="group flex items-center py-3 text-zinc-500 hover:text-pink-700 transition">
+                                        <div class="w-4 h-4 me-3 {% if listed_habit.id == habit.id %}bg-pink-800{% else %}bg-zinc-500{% endif %} group-hover:bg-pink-700 transition"></div>
                                         <div>
-                                            {{ habit.name }}
+                                            {{ listed_habit.name }}
                                         </div>
                                     </a>
                                     {% endfor %}
@@ -90,7 +90,7 @@
             </div>
             {% block nav %}{% endblock nav %}
         </nav>
-        <main id="main-container" class="h-full">
+        <main id="main-container" class="grow">
             {% block content %}
             {% endblock content %}
         </main>

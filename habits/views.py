@@ -11,6 +11,10 @@ from habits.forms import CreateUpdateHabitForm
 
 @login_required
 def home_view(request):
+    """
+    Displays most recently updated habit if exists, otherwise redirects to 
+    create habit page.
+    """
     
     habit = Habit.objects.filter(owner=request.user, deleted=False
         ).order_by('updated_at').first()
@@ -32,6 +36,10 @@ def home_view(request):
 
 @login_required
 def create_habit_view(request):
+    """
+    Renders create habit user interface on GET request, attempts to create 
+    habit on POST request.
+    """
 
     if not request.user.max_habits_created():
         form = CreateUpdateHabitForm()
@@ -58,6 +66,10 @@ def create_habit_view(request):
 
 @login_required
 def max_habits_created_view(request):
+    """
+    Renders warning to user that the max number of habits for the account has 
+    been reached.
+    """
 
     context = {
         'user_habits': Habit.objects.filter(owner=request.user, deleted=False),
@@ -67,7 +79,10 @@ def max_habits_created_view(request):
 
 
 @login_required
-def habit_view(request, pk=None):
+def habit_view(request, pk):
+    """
+    Renders the habit grid for the specified habit.
+    """
     
     habit = get_object_or_404(Habit, id=pk, owner=request.user, deleted=False)
     date_grid = habit.generate_grid()
@@ -113,8 +128,3 @@ def toggle_completed_day_view(request, pk):
     }
 
     return render(request, 'habits/partials/day.html', context)
-
-
-
-def test_error_view(request):
-    return render(request, 'account/account_inactive.html')

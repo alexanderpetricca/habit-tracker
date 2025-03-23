@@ -33,6 +33,7 @@ class Habit(models.Model):
     )
     name = models.CharField(max_length=50)
     duration = models.IntegerField(
+        default=30,
         choices=DURATION_CHOICES,
         validators=[
             MinValueValidator(7),
@@ -49,7 +50,7 @@ class Habit(models.Model):
         return self.name
     
 
-    def generate_grid(self):
+    def generate_grid(self) -> dict:
         start_date = self.created_at.date()
         today = date.today()
         completed_days = set(self.completed_days.values_list("day", flat=True))

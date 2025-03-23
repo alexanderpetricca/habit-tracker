@@ -9,9 +9,11 @@
 </div>
 {% endblock nav %}
 {% block content %}
-<div class="max-h-screen mx-auto max-w-50 grid grid-cols-7 gap-2">
-    {% for date, data in date_grid.items %}
-    {% include 'habits/partials/day.html' %}
-    {% endfor %}
+<div class="h-full flex justify-center items-center">
+    <div class="w-50 lg:w-100 grid grid-cols-7 gap-2 py-10">
+        {% for date, data in date_grid.items %}
+        {% include 'habits/partials/day.html' %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}

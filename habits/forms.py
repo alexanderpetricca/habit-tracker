@@ -27,3 +27,4 @@ class CreateUpdateHabitForm(forms.ModelForm):
 
         self.fields['duration'].required = True
         self.fields['duration'].choices = Habit.DURATION_CHOICES
+        self.initial['duration'] = 60

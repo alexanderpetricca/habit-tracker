@@ -1,7 +1,9 @@
 from django.views.generic import TemplateView
+from django.shortcuts import redirect
 from django.urls import reverse
-
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import login
 
 from allauth.account.views import (
     LoginView, 
@@ -17,6 +19,9 @@ from allauth.account.views import (
     EmailVerificationSentView,
     AccountInactiveView, 
 )
+
+from accounts.models import SignUpCode
+from accounts.forms import CustomSignupForm
 
 
 class CustomLoginView(LoginView):
@@ -40,7 +45,25 @@ class CustomSignupView(SignupView):
     Allauth override for SignupView.
     """
 
-    pass
+    form_class = CustomSignupForm
+
+
+    def form_valid(self, form):
+        """
+        Validate the signup code before proceeding with account creation.
+        """
+        code = form.cleaned_data.get('signup_code')
+
+        try:
+            signup_code = SignUpCode.objects.get(code=code)
+            signup_code.delete()
+
+        except ObjectDoesNotExist:
+            form.add_error('signup_code', 'This code is not valid.')
+            return self.form_invalid(form)
+
+        # Proceed with normal Allauth signup flow
+        return super().form_valid(form)
     
 
 class CustomPasswordResetView(PasswordResetView):

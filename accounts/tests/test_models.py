@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 
+from accounts.models import SignUpCode
 from habits.models import Habit
 
 
@@ -88,3 +89,21 @@ class CustomUserModelTests(TestCase):
         self.user.save()
         self.user.refresh_from_db()
         self.assertFalse(self.user.max_habits_created())
+
+
+
+class SignupCodeModelTests(TestCase):
+
+    def setUp(self):
+        self.signup_code = SignUpCode.objects.create()
+
+
+    def test_create_signupcode(self):
+        self.assertIsNotNone(self.signup_code.id)
+        self.assertIsNotNone(self.signup_code.created)
+        self.assertTrue(len(self.signup_code.code) == 12)
+
+
+    def test_signupcode_string_method(self):
+        self.assertEqual(str(self.signup_code), self.signup_code.code)
+        

@@ -42,6 +42,13 @@ class CustomSignupForm(SignupForm):
     Override settings on AllAuth signup form.
     """
 
+    signup_code = forms.CharField(
+        required=True,
+        max_length=12,
+        label='Signup Code',
+        widget=forms.TextInput(attrs={'placeholder': 'Signup Code'}),
+    )    
+
 
     def __init__(self, *args, **kwargs):
         super(CustomSignupForm, self).__init__(*args, **kwargs)

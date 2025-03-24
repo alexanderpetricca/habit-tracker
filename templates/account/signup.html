@@ -6,6 +6,7 @@
 <form action="{% url 'account_signup' %}" method="post" class="w-full max-w-150 flex flex-col justify-center mb-5">
     {% csrf_token %}
     {% include 'partials/form-errors.html' %}
+    {% field_wrapper form.signup_code %}
     {% field_wrapper form.email %}
     {% field_wrapper form.password1 %}
     <div class="flex items-start">

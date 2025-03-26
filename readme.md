@@ -2,20 +2,15 @@
 
 ## Overview
 
-Basic boiler plate for a dockerised Django application, with the following packages, libraries, and configuration:
+Web application for tracking daily habits, developed as an experiment in UI design.
 
+### Technologies Used:
+
+- Django 5.1, running on Python 3.11.9.
+- Postgres
+- Tailwind CSS
+- Alpine JS
 - Docker
-- **Django 5.1**, running on **Python 3.11.9** .
-- Postgres Database, connected via psycopg, running **Postgres 16**.
-- Custom user model, with username disabled, email set to required and basic tests.
-- Django AllAuth, with urls and views manual added to easily disable / configure.
-- Django Debug Toolbar
-- Django Extensions
-- **Tailwind CSS 4.0.3** (NPM Package)
-- **Alpine JS 3.14.8** (CDN)
-- Base Templates for authorised and non-authorised views.
-- Core app, containing custom tags and a field_wrapper tag for form fields.
-- Settings configured for environment variables, template directories, static directories.
 
 
 ## Local Development Setup
